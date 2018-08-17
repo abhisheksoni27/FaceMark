@@ -14,4 +14,9 @@ public class Tuple {
     public float getY() {
         return Y;
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%f, %f)", X, Y);
+    }
 }

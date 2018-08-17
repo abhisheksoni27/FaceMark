@@ -2,16 +2,11 @@ package codeprose.facemark;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.common.FirebaseVisionPoint;
@@ -20,9 +15,9 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class FaceMarker {
 
@@ -31,6 +26,8 @@ public class FaceMarker {
     public static void setInterface(SetResultInterface s) {
         mCallback = s;
     }
+
+    static HashMap<FirebaseVisionFaceLandmark, Tuple> landmarks;
 
     public interface SetResultInterface {
         void setImage(Bitmap bitmap);
@@ -90,21 +87,29 @@ public class FaceMarker {
     }
 
     private static void getLandmarks(FirebaseVisionFace face) {
-        // If landmark detection was enabled (mouth, ears, eyes, cheeks, and
-        // nose available):
-        FirebaseVisionFaceLandmark leftEar = face.getLandmark(FirebaseVisionFaceLandmark.LEFT_EAR);
 
-//        List<FirebaseVisionFaceLandmark> landmarks = new ArrayList<>();
+        landmarks = new HashMap<>();
 
-        HashMap<FirebaseVisionFaceLandmark, Tuple> landmarks= new HashMap<>();
-
-        for(int  i = 0; i <=12; i++){
-            if(i == 2 || i == 8)continue;
+        for (int i = 0; i <= 12; i++) {
+            if (i == 2 || i == 8) continue;
             FirebaseVisionFaceLandmark landmark = face.getLandmark(i);
-            FirebaseVisionPoint pos = landmark.getPosition();
-            landmarks.put(landmark, new Tuple(pos.getX(),pos.getY()));
+            if (landmark != null) {
+
+                FirebaseVisionPoint pos = landmark.getPosition();
+                landmarks.put(landmark, new Tuple(pos.getX(), pos.getY()));
+            }
+        }
+
+        drawLandmarks();
+
+    }
+
+    private static void drawLandmarks() {
+        for (HashMap.Entry<FirebaseVisionFaceLandmark, Tuple> landmark : landmarks.entrySet()) {
+            System.out.println(landmark.getKey().getFaceLandmarkType() + "/" + landmark.getValue());
         }
 
     }
+
 
 }
