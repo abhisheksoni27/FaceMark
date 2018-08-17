@@ -12,8 +12,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.-->
 <resources>
-    <string name="app_name">Emojify</string>
-    <string name="emojify_me">Emojify Me!</string>
+    <string name="app_name">FaceMark Me</string>
+    <string name="face_mark_me">FaceMark Me!</string>
     <string name="no_emoji">No Emoji Expression Found</string>
     <string name="delete_success">Images was deleted!</string>
     <string name="delete_failure">Image deletion failed</string>
@@ -22,5 +22,5 @@
     <string name="error">Error finding image</string>
     <string name="go">GO</string>
     <string name="permission_denied">Permission denied</string>
-    <string name="imageview_description">The imageview that contains the emojified picture</string>
+    <string name="imageview_description">The imageview that contains the facemarked picture</string>
 </resources>

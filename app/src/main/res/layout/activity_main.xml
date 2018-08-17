@@ -41,16 +41,16 @@
         android:layout_above="@+id/emojify_button"
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/view_margin"
-        android:text="@string/emojify_me"
+        android:text="@string/face_mark_me"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <Button
-        android:id="@+id/emojify_button"
+        android:id="@+id/facemarker_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:onClick="emojifyMe"
+        android:onClick="faceMarkMe"
         android:text="@string/go"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
 

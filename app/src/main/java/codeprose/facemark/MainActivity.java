@@ -39,16 +39,16 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements Emojifier.SetResultInterface{
+public class MainActivity extends AppCompatActivity implements FaceMarker.SetResultInterface{
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_STORAGE_PERMISSION = 1;
 
-    private static final String FILE_PROVIDER_AUTHORITY = "com.example.android.fileprovider";
+    private static final String FILE_PROVIDER_AUTHORITY = "codeprose.facemark.fileprovider";
 
     private ImageView mImageView;
 
-    private Button mEmojifyButton;
+    private Button mFaceMarkerButton;
     private FloatingActionButton mShareFab;
     private FloatingActionButton mSaveFab;
     private FloatingActionButton mClearFab;
@@ -70,19 +70,19 @@ public class MainActivity extends AppCompatActivity implements Emojifier.SetResu
         mShareFab = findViewById(R.id.share_button);
         mSaveFab = findViewById(R.id.save_button);
         mClearFab = findViewById(R.id.clear_button);
-        mEmojifyButton = findViewById(R.id.emojify_button);
+        mFaceMarkerButton = findViewById(R.id.facemarker_button);
         mTitleTextView = findViewById(R.id.title_text_view);
 
-        Emojifier.setInterface(this);
+        FaceMarker.setInterface(this);
 
     }
 
     /**
-     * OnClick method for "Emojify Me!" Button. Launches the camera app.
+     * OnClick method for "FaceMark Me!" Button. Launches the camera app.
      *
-     * @param view The emojify me button.
+     * @param view The faceMark me button.
      */
-    public void emojifyMe(View view) {
+    public void faceMarkMe(View view) {
         // Check for the external storage permission
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements Emojifier.SetResu
     private void processAndSetImage() {
 
         // Toggle Visibility of the views
-        mEmojifyButton.setVisibility(View.GONE);
+        mFaceMarkerButton.setVisibility(View.GONE);
         mTitleTextView.setVisibility(View.GONE);
         mSaveFab.setVisibility(View.VISIBLE);
         mShareFab.setVisibility(View.VISIBLE);
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements Emojifier.SetResu
         // Resample the saved image to fit the ImageView
         mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
 
-        mResultsBitmap = Emojifier.detectFacesAndOverlayEmoji(getApplicationContext(), mResultsBitmap);
+        mResultsBitmap = FaceMarker.detectFacesAndOverlayLandmarks(getApplicationContext(), mResultsBitmap);
 
         // Set the new bitmap to the ImageView
         mImageView.setImageBitmap(mResultsBitmap);
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements Emojifier.SetResu
     public void clearImage(View view) {
         // Clear the image and toggle the view visibility
         mImageView.setImageResource(0);
-        mEmojifyButton.setVisibility(View.VISIBLE);
+        mFaceMarkerButton.setVisibility(View.VISIBLE);
         mTitleTextView.setVisibility(View.VISIBLE);
         mShareFab.setVisibility(View.GONE);
         mSaveFab.setVisibility(View.GONE);
